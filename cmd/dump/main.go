@@ -10,20 +10,14 @@ import (
 
 func main() {
 	flag.Parse()
-	f, err := os.Open(flag.Arg(0))
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	content := gomind.XMapContent{}
-	dec := xml.NewDecoder(f)
-	err = dec.Decode(&content)
-	if err != nil {
-		log.Fatal(err)
-	}
+	mind, err := gomind.Open(flag.Arg(0))
 
 	enc := xml.NewEncoder(os.Stdout)
 	enc.Indent("", "\t")
+	content, err := mind.Content()
+	if err != nil {
+		log.Fatal(err)
+	}
 	err = enc.Encode(content)
 	if err != nil {
 		log.Fatal(err)
