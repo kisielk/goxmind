@@ -3,14 +3,14 @@ package main
 import (
 	"encoding/xml"
 	"flag"
-	"gomind"
+	"github.com/kisielk/goxmind"
 	"log"
 	"os"
 )
 
 func main() {
 	flag.Parse()
-	mind, err := gomind.Open(flag.Arg(0))
+	mind, err := goxmind.Open(flag.Arg(0))
 
 	enc := xml.NewEncoder(os.Stdout)
 	enc.Indent("", "\t")

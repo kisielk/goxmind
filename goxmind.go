@@ -1,4 +1,4 @@
-package gomind
+package goxmind
 
 import (
 	"archive/zip"
@@ -20,7 +20,7 @@ type Sheet struct {
 
 type Topic struct {
 	ID             string  `xml:"id,attr"`
-	StructureClass string  `xml:"structure-class"`
+	StructureClass string  `xml:"structure-class,attr"`
 	Timestamp      int     `xml:"timestamp,attr"`
 	Title          string  `xml:"title"`
 	Children       []Topic `xml:"children>topics>topic"`
