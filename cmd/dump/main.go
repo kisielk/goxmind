@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"flag"
 	"github.com/kisielk/goxmind"
@@ -8,12 +9,28 @@ import (
 	"os"
 )
 
+type encoder interface {
+	Encode(v interface{}) error
+}
+
 func main() {
+	format := flag.String("f", "xml", "format to output, one of: xml, json")
 	flag.Parse()
 	mind, err := goxmind.Open(flag.Arg(0))
 
-	enc := xml.NewEncoder(os.Stdout)
-	enc.Indent("", "\t")
+	var enc encoder
+	switch *format {
+	case "xml":
+		xmlEnc := xml.NewEncoder(os.Stdout)
+		xmlEnc.Indent("", "\t")
+		enc = xmlEnc
+	case "json":
+		jsonEnc := json.NewEncoder(os.Stdout)
+		enc = jsonEnc
+	default:
+		log.Fatalln("invalid format:", *format)
+	}
+
 	content, err := mind.Content()
 	if err != nil {
 		log.Fatal(err)

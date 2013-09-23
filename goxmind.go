@@ -7,7 +7,7 @@ import (
 )
 
 type XMapContent struct {
-	XMLName xml.Name `xml:"xmap-content"`
+	XMLName xml.Name `xml:"xmap-content" json:"-"`
 	Sheets  []Sheet  `xml:"sheet"`
 }
 
